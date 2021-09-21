@@ -1,18 +1,19 @@
 package com.techbee.repository;
 
-import java.util.List;
 
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.techbee.model.Registration;
 
 @Repository
-public interface RegistrationRepository {
+public interface RegistrationRepository extends JpaRepository<Registration, Integer> {
 
-	public String saveRegistration(Registration registration) throws Exception;
-	public List<Registration> findAllRegistration() throws Exception;
+//	public String saveRegistration(Registration registration) ;
+//	public List<Registration> findAllRegistration();
 	public Registration findByEmailAndPhoneNumber(String email, long phoneNumber);
-	public String updatePhoneNumberById(int id, long phoneNumber) throws Exception;
-	public String deleteByEmail(String email) throws Exception;
+	public String deleteByEmail(String email) ;
+	public Registration findRegistrationById(Integer id);
 
 }

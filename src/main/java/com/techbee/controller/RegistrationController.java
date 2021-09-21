@@ -15,37 +15,42 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.techbee.model.Registration;
-import com.techbee.service.RegistrationService;
+import com.techbee.service.RegisterService;
 
 @RequestMapping(path="/registration")
 @RestController
 public class RegistrationController {
 
-	private RegistrationService registrationService;
+	private RegisterService registerService;
 	
 	@Autowired
-	public void setRegistrationService(RegistrationService registrationService) {
-		this.registrationService = registrationService;
+	public void setRegisterService(RegisterService registerService) {
+		this.registerService = registerService;
 	}
 	
 	@PostMapping(path = "/new", consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public String registration(@RequestBody Registration registration) throws Exception {
-		return registrationService.saveRegistration(registration);
+	public Registration registration(@RequestBody Registration registration) throws Exception {
+		return registerService.saveRegistration(registration);
 	}
 	
 	@GetMapping(path="/all", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public List<Registration> findAllRegistration() throws Exception {
-		return registrationService.findAllRegistration();
+		return registerService.findAllRegistration();
 	}
 	
 	@PutMapping(path = "/update-phoneNumber")
-	public String updatePhoneNumberById(@RequestParam int id, @RequestParam long phoneNumber) throws Exception {
-		return registrationService.updatePhoneNumberById(id, phoneNumber);
+	public Registration updatePhoneNumberById(@RequestParam int id, @RequestParam long phoneNumber) throws Exception {
+		return registerService.updatePhoneNumberById(id, phoneNumber);
 	}
 
 	@GetMapping(path = "/delete/{email}", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public String deleteByEmail(@PathVariable String email) throws Exception {
-		return registrationService.deleteByEmail(email);
+		return registerService.deleteByEmail(email);
+	}
+	
+	@PostMapping(path = "/remove")
+	public void deleteById(@RequestParam Integer id) {
+		this.registerService.deleteById(id);
 	}
 }
 
